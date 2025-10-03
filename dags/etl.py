@@ -63,4 +63,30 @@ def transform_data(data) -> list:
             })
     logging.info("Data Transformed Successfully")
     return TRANSFORMED_data
+
+
+def connectDB() -> tuple:
+    try:
+        with open('dags/conn.yaml', 'r') as file:
+            config = yaml.safe_load(file)
+
+            host = config.get('host_linux')
+            user = config.get('user')
+            db = config.get('database')
+            password = config.get('password')
+            port = config.get('port')
+
+            conn = psycopg2.connect(
+                dbname=db,
+                user=user,
+                password=password,
+                host=host,
+                port=port
+            )
+            cur = conn.cursor()
+            print('Connected succesfully!')
+        return conn, cur
+    except Exception as e:
+        logging.error("connection failed {e}")
+
     
