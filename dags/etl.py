@@ -90,3 +90,62 @@ def connectDB() -> tuple:
         logging.error("connection failed {e}")
 
     
+
+def create_tables():
+    conn, curr = connectDB()
+    querries = [
+                """CREATE SCHEMA IF NOT EXISTS carbon;""", 
+    
+                """CREATE TABLE IF NOT EXISTS carbon.regions(
+                    region_id SERIAL PRIMARY KEY,
+                    short_name VARCHAR(50) NOT NULL
+                    );""",
+                                        
+                """CREATE TABLE IF NOT EXISTS carbon.carbon_intensity(
+                    id SERIAL PRIMARY KEY,
+                    date DATE NOT NULL,
+                    "from" TIME NOT NULL,
+                    day_recorded VARCHAR(10) NOT NULL,
+                    month_recorded VARCHAR(20) NOT NULL,
+                    dnoregion VARCHAR(100) NOT NULL,
+                    region_id INT NOT NULL,
+                    intensity_forecast INT NOT NULL,
+                    intensity_index VARCHAR(20) NOT NULL,
+                    biomass DECIMAL(5, 2),
+                    coal DECIMAL(5, 2),
+                    imports DECIMAL(5,2),
+                    gas DECIMAL(5, 2),
+                    nuclear DECIMAL(5, 2),
+                    other DECIMAL(5, 2),
+                    hydro DECIMAL(5, 2),
+                    solar DECIMAL(5, 2),
+                    wind DECIMAL(5, 2),
+                    FOREIGN KEY (region_id) REFERENCES carbon.regions(region_id)
+                    );""",
+                    
+                """INSERT INTO carbon.regions (region_id, short_name) VALUES
+                (1, 'North Scotland'),
+                (2, 'South Scotland'),
+                (3, 'North West England'),
+                (4, 'North East England'),
+                (5, 'Yorkshire'),
+                (6, 'North Wales & Merseyside'),
+                (7, 'South Wales'),
+                (8, 'West Midlands'),
+                (9, 'East Midleands'),
+                (10, 'East England'),
+                (11, 'South West England'),
+                (12, 'South England'),
+                (13, 'London'),
+                (14, 'South East England'),
+                (15, 'England'),
+                (16, 'Scotland'),
+                (17, 'Wales'),
+                (18, 'GB') ON CONFLICT (region_id) DO NOTHING;"""
+                                  
+
+                    ]
+    for querry in querries:
+        curr.execute(querry)
+    conn.commit()
+    return None
