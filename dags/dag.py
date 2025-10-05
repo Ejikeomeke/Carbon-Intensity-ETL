@@ -32,4 +32,12 @@ def extract(**kwargs):
     data = read_json()
     kwargs['ti'].xcom_push(key='extracted_data', value=data)  # Push data to XCom
     print("Ended Data Extraction!")
-    
+
+
+def transform(**kwargs):
+    ti = kwargs['ti']
+    data = ti.xcom_pull(key='extracted_data')  # Pull data from XCom
+    print("Commencing Transformation!")
+    transformed_data = transform_data(data=data)
+    kwargs['ti'].xcom_push(key='transformed_data', value=transformed_data)  # Push transformed data to XCom
+    print("Transformation Complete!")
