@@ -41,3 +41,14 @@ def transform(**kwargs):
     transformed_data = transform_data(data=data)
     kwargs['ti'].xcom_push(key='transformed_data', value=transformed_data)  # Push transformed data to XCom
     print("Transformation Complete!")
+    
+
+def load_to_db(**kwargs):
+    ti = kwargs['ti']
+    transformed_data = ti.xcom_pull(key='transformed_data')  # Pull transformed data from XCom
+    create_tables()
+    print("Connecting to DB....")
+    conn, curr = connectDB()
+    print('Loading Data to Database...')
+    load_data_db(data=transformed_data, conn=conn, cur=curr)
+    print("Data Loaded to DB!")
