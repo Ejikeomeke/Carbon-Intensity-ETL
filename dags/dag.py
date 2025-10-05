@@ -61,3 +61,33 @@ def load_to_csv(**kwargs):
     print("Saving Data to CSV...")
     load_data_csv(transformed_data)
     print("Data Saved to CSV!")
+
+
+
+# Define tasks
+extract_task = PythonOperator(
+    task_id='extract',
+    python_callable=extract,
+    dag=dag,
+)
+
+transform_task = PythonOperator(
+    task_id='transform',
+    python_callable=transform,
+    dag=dag,
+)
+
+load_to_db_task = PythonOperator(
+    task_id='load_to_db',
+    python_callable=load_to_db,
+    dag=dag,
+)
+
+load_to_csv_task = PythonOperator(
+    task_id='load_to_csv',
+    python_callable=load_to_csv,
+    dag=dag,
+)
+
+# Define task dependencies
+extract_task >> transform_task >> [load_to_db_task, load_to_csv_task]
