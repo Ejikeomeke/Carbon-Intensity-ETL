@@ -12,3 +12,24 @@ default_args = {
     'retries': 2,
     'retry_delay': timedelta(minutes=2),
 }
+
+
+# DAG defined
+dag = DAG(
+    'carbon_intensity_etl2',
+    default_args=default_args,
+    description='ETL Pipeline for Carbon Intensity Data',
+    schedule ='@daily',  # Run daily
+    catchup=False,  # Disable catchup to avoid backfilling
+)
+
+
+def extract(**kwargs):
+    start = date(2024, 1, 1)
+    BASE_URL = f"https://api.carbonintensity.org.uk/regional/intensity/{start}/pt24h"
+    print("Commenced Data Extraction!")
+    #data = extract_data(URL=BASE_URL)
+    data = read_json()
+    kwargs['ti'].xcom_push(key='extracted_data', value=data)  # Push data to XCom
+    print("Ended Data Extraction!")
+    
