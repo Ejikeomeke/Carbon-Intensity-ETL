@@ -52,3 +52,12 @@ def load_to_db(**kwargs):
     print('Loading Data to Database...')
     load_data_db(data=transformed_data, conn=conn, cur=curr)
     print("Data Loaded to DB!")
+
+
+
+def load_to_csv(**kwargs):
+    ti = kwargs['ti']
+    transformed_data = ti.xcom_pull(key='transformed_data')  # Pull transformed data from XCom
+    print("Saving Data to CSV...")
+    load_data_csv(transformed_data)
+    print("Data Saved to CSV!")
