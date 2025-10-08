@@ -14,6 +14,8 @@ x-airflow-common:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
+    - ./scripts/entrypoint.sh:/opt/airflow/entrypoint.sh
+    - ./requirements.txt:/opt/airflow/requirements.txt
   user: "${AIRFLOW_UID}:0"
   depends_on:
     - postgres
@@ -28,7 +30,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
+      - postgres-db-data:/var/lib/postgresql/data
 
   airflow-webserver:
     <<: *airflow-common
@@ -52,7 +54,7 @@ services:
       AIRFLOW_ADMIN_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD}
       AIRFLOW_ADMIN_FIRSTNAME: ${AIRFLOW_ADMIN_FIRSTNAME}
       AIRFLOW_ADMIN_LASTNAME: ${AIRFLOW_ADMIN_LASTNAME}
-      AIRFFLOW_ADMIN_ROLE: ${AIRFFLOW_ADMIN_ROLE}
+      AIRFLOW_ADMIN_ROLE: ${AIRFLOW_ADMIN_ROLE}
       AIRFLOW_ADMIN_EMAIL: ${AIRFLOW_ADMIN_EMAIL}
     command: bash -c "airflow db migrate && airflow users create \
       --username $${AIRFLOW_ADMIN_USERNAME}\
@@ -66,4 +68,4 @@ services:
 
 
 volumes:
-  postgres-db-volume:
+  postgres-db-data:
