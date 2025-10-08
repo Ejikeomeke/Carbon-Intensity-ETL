@@ -28,8 +28,7 @@ def extract(**kwargs):
     start = date(2024, 1, 1)
     BASE_URL = f"https://api.carbonintensity.org.uk/regional/intensity/{start}/pt24h"
     print("Commenced Data Extraction!")
-    #data = extract_data(URL=BASE_URL)
-    data = read_json()
+    data = extract_data(URL=BASE_URL)
     kwargs['ti'].xcom_push(key='extracted_data', value=data)  # Push data to XCom
     print("Ended Data Extraction!")
 
