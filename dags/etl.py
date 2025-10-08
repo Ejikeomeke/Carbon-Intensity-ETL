@@ -66,7 +66,7 @@ def transform_data(data) -> list:
 
 def connectDB() -> tuple:
     try:
-        with open('dags/conn.yaml', 'r') as file:
+        with open('conn.yaml', 'r') as file:
             config = yaml.safe_load(file)
 
             host = config.get('host_linux')
