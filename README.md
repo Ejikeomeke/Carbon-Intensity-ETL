@@ -30,3 +30,4 @@ Having a dockerised orchestrated pipeline will dramatically improve the efficien
   * Data Extraction: Used Python codes to extract historical carbon intensity data from https://api.carbonintensity.org.uk/intensity.
   * Data Transformation: Used pandas to parse and manipulate the data for storage compatibility.
   * Data Storage: Designed a database schema to organize the data effectively and store with help of sql queries.
+  * Dockerised the project using docker compose technology
