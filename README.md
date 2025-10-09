@@ -22,6 +22,7 @@ Automating the existing data pipeline will dramatically improve the efficiency, 
   * Postgres
   * Python
   * Airflow
+  * Docker
 
 ## Project architecture
 ![Project Architecture](architecture.jpg)
