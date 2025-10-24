@@ -1,7 +1,7 @@
 # Carbon Intensity ETL
 This dockerised project leverages on the orchestrating power of airflow to seemlessly extract data from an Api at scheduled intervals
 
-#Business Case (Xtd Research labs)
+# Business Case (Xtd Research labs)
 Xtd Research Labs is dedicated to pushing the boundaries of scientific knowledge and making a positive impact in the world. Through  research, collaborations, and community engagement, they strive to create a healthier, more sustainable future for all.
 
 # Problem Statement
